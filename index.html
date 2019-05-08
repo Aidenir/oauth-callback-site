@@ -5,7 +5,7 @@
   <meta charset="utf-8">
 
   <title>OAuth 2.0 callback handler</title>
-  <meta name="description" content="The HTML5 Herald">
+  <meta name="description" content="Simple OAuth 2.0 callback handler for debugging purposes">
   <meta name="author" content="Viktor Hansson">
   <link rel="icon" type="image/png" href="favicon.png">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -43,7 +43,6 @@
     input[type=text]{
       width: 350px;
       padding: 12px 20px;
-      margin: 8px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
@@ -65,6 +64,20 @@
       display: none;
       opacity: 0;
     }
+    #error {
+      padding: 0;
+      margin: 0;
+      background-color: #dc3545;
+      margin-bottom: 10px;
+      padding: 10px;
+      color: white;
+      border-radius: 4px;
+      display: inline-block;
+      font-size: 1em;
+      transition: 1s;
+      opacity: 0;
+  }
+
   </style>
   <script type="text/javascript">
     var showtoast = function(){
@@ -126,19 +139,22 @@
           var code = getQueryVariable("token");
           if(code){
             console.log(code);
-            document.getElementById("code").value = "Code: '" + code + "'"
+            document.getElementById("code").value = code
             window.code = code;
             copyUsingNewAPI(code);
           }
           else{
-            document.getElementById("code").value = "No code found in the url: '" + window.location + "'"
+            document.getElementById("error").innerHTML = "No code found in the url: '" + window.location + "'"
+            document.getElementById("error").style.opacity = "1";
             console.log("Code not found");
           }
         }
     };
     var copyUsingButton = function(){
-      console.log("Copy " + window.code + " to clipboard");
-      copyUsingNewAPI(window.code);
+      if(window.code){
+        console.log("Copy " + window.code + " to clipboard");
+        copyUsingNewAPI(window.code);
+      }
     }
   </script>
 </head>
@@ -147,6 +163,9 @@
   <center>
     <p>Code</p>
     <input type="text" id="code"></input>
+    <div>
+      <p id="error">Something failed</p>
+    </div>
     <button class="invisible" type="button" name="button" onclick="copyUsingButton()">Copy!</button>
     <p id="toast">Copied!</p>
   </center>
