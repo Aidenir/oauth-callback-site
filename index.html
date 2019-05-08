@@ -126,12 +126,12 @@
           var code = getQueryVariable("token");
           if(code){
             console.log(code);
-            document.getElementById("code").innerHTML = "Code: '" + code + "'"
+            document.getElementById("code").value = "Code: '" + code + "'"
             window.code = code;
             copyUsingNewAPI(code);
           }
           else{
-            document.getElementById("code").innerHTML = "No code found in the url: '" + window.location + "'"
+            document.getElementById("code").value = "No code found in the url: '" + window.location + "'"
             console.log("Code not found");
           }
         }
