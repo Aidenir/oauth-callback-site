@@ -20,6 +20,7 @@
     }
     h1{
       margin-top: 0;
+      text-align: center;
     }
     body{
       color: white;
@@ -35,8 +36,24 @@
     }
     .codediv{
       background-color: #232323;
-      padding-top: 2em;
       padding-bottom: 2em;
+    }
+    #navbar{
+      padding-top: 2em;
+      margin-bottom: 1.5em;
+      padding-bottom: 1px;
+      box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);
+    }
+    #navbar > a{
+      display: inline-block;
+      position: absolute;
+      right: 25px;
+      top: 25px;
+      color: #9e9eff;
+      text-decoration: none;
+    }
+    #navbar > a > img{
+      vertical-align: middle;
     }
     button {
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -50,6 +67,7 @@
       display: inline-block;
       font-size: 16px;
       border-radius: 4px;
+      margin-top: 5px;
     }
     button:hover {
       box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -201,6 +219,11 @@
             copyUsingNewAPI(code);
           }
           else{
+            var d = document.createElement("div");
+            var p = document.createElement("p");
+            p.id = "error";
+            d.appendChild(p);
+            document.getElementById("center").insertBefore(d, document.getElementById("center").getElementsByTagName("button")[0]);
             document.getElementById("error").innerHTML = "No code found in the url: '" + window.location + "'"
             document.getElementById("error").style.opacity = "1";
             console.log("Code not found");
@@ -266,12 +289,13 @@
 </head>
 <body onload="handleCode()">
   <div class="codediv">
-    <center>
+    <div id="navbar">
+      <h1>OAuth 2.0 callback site</h1>
+      <a href="https://github.com/Aidenir/oauth-callback-site"><img src="https://image.flaticon.com/icons/png/512/25/25231.png" width="32px" height="32px"></img> GitHub</a>
+    </div>
+    <center id="center">
       <h1 id="title">Code</h1>
       <input type="text" id="code"></input>
-      <div>
-        <p id="error">Something failed</p>
-      </div>
       <button class="invisible" type="button" name="button" onclick="copyUsingButton()">Copy!</button>
       <p id="toast">Copied!</p>
     </center>
@@ -281,7 +305,8 @@
       <h1>OAuth 2.0 callback handler</h1>
       <p>This is convenient site that you can use as the redirect_uri when developing or testing OAuth 2.0 flows.
         When loading this site with either a "code" or a "token" query parameter it will be copied into your clipboard
-        automatically (if supported, curerntly only on chrome), or you can click the copy button and have it copied.</p>
+        automatically (if supported, currently only on chrome), or you can click the copy button and have it copied.</p>
+
       <h2>For example:</h2>
       <a href="THISURL?code=exampleCode">THISURL?code=exampleCode</a>
       <a href="THISURL?token=exampleToken">THISURL?token=exampleToken</a>
